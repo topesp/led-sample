@@ -16,7 +16,7 @@ static void mqtt_event_handler(void *event_handler_arg,
 void mq_con()
 {
     const esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri = "mqtt://mqtt.eclipseprojects.io",
+        .broker.address.uri = "mqtt://1.15.13.162",
     };
     esp_mqtt_client_handle_t client = esp_mqtt_client_init(&mqtt_cfg);
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, client);

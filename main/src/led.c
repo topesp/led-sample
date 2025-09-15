@@ -49,5 +49,5 @@ void led_init()
 
 char *led_current_state()
 {
-    return "on";
+    return switch_state ? "on" : "off";
 }

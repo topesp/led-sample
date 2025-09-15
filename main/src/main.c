@@ -7,6 +7,7 @@
 
 #include "led.h"
 #include "wifi.h"
+#include "mq.h"
 
 #define TAG "led_sample"
 
@@ -24,7 +25,7 @@ void app_main(void)
     wifi_con();
 
     // connnect mqtt server
-    
+    mq_con();
 
     while (1) {
         ESP_LOGI(TAG, "LED is %s", led_current_state());
