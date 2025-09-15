@@ -1,16 +1,14 @@
+#include "led.h"
 
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
 
 #include "iot_button.h"
 #include "button_gpio.h"
-
 #include "driver/gpio.h"
-
-#define TAG "led_sample"
 
 #define SWITCH_GPIO GPIO_NUM_21
 #define LED_GPIO GPIO_NUM_22
+#define TAG "led_c"
 
 static bool switch_state = false;
 
@@ -20,7 +18,7 @@ void handle_switch_button_click(void *arg1, void *arg2) {
     ESP_LOGI(TAG, "BUTTON_SINGLE_CLICK");
 }
 
-void app_main(void)
+void led_init()
 {
     gpio_config_t io_conf = {
         .pin_bit_mask = (1ULL << LED_GPIO),
@@ -47,9 +45,9 @@ void app_main(void)
         abort();
     }
     iot_button_register_cb(gpio_btn,BUTTON_SINGLE_CLICK, NULL, &handle_switch_button_click, NULL);
+}
 
-    while (1) {
-        ESP_LOGI(TAG, "LED is %s", switch_state ? "ON" : "OFF");
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+char *led_current_state()
+{
+    return "on";
 }
