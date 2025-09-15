@@ -51,3 +51,10 @@ char *led_current_state()
 {
     return switch_state ? "on" : "off";
 }
+
+int led_turn_on()
+{
+    switch_state = true;
+    gpio_set_level(LED_GPIO, switch_state);
+    return 0;
+}
