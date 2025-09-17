@@ -4,6 +4,7 @@ build/
 # IDE specific files
 .vscode/
 .idea/
+.github
 
 # ESP32 specific
 sdkconfig

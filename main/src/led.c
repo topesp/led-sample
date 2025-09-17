@@ -58,3 +58,10 @@ int led_turn_on()
     gpio_set_level(LED_GPIO, switch_state);
     return 0;
 }
+
+int led_turn_off()
+{
+    switch_state = false;
+    gpio_set_level(LED_GPIO, switch_state);
+    return 0;
+}

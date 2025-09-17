@@ -8,4 +8,6 @@ char *led_current_state();
 
 int led_turn_on();
 
+int led_turn_off();
+
 #endif
