@@ -17,7 +17,7 @@ export default function Device() {
             connectTimeout: 30000, // Timeout after 30 seconds
             clean: true
         })
-        
+
         client.on('connect', () => {
             console.log('Connected to MQTT broker')
             setIsMqttConnected(true)
@@ -28,7 +28,7 @@ export default function Device() {
 
         client.on('message', (topic, message) => {
             const status = message.toString()
-            console.log(topic,status)
+            console.log(topic, status)
             if (topic === 'device/status') {
                 setIsDeviceOnline(status === 'online')
             } else if (topic === 'device/led/status') {
@@ -64,15 +64,15 @@ export default function Device() {
     }, [])
 
     const handlerOpenLed = () => {
-        if (mqttClient && mqttClient.connected && isDeviceOnline) {
-            mqttClient.publish('device/led/control', 'on', { qos: 1 })
-        }
+
+        mqttClient?.publish('device/led/control', 'on', { qos: 1 })
+
     }
 
     const handlerCloseLed = () => {
-        if (mqttClient && mqttClient.connected && isDeviceOnline) {
-            mqttClient.publish('device/led/control', 'off', { qos: 1 })
-        }
+
+        mqttClient?.publish('device/led/control', 'off', { qos: 1 })
+
     }
 
     const handlerIndexClick = () => {
@@ -81,13 +81,13 @@ export default function Device() {
 
     return (
         <div className="p-4">
-            <div 
+            <div
                 onClick={handlerIndexClick}
                 className="cursor-pointer mb-4 text-blue-600 hover:text-blue-800"
             >
                 返回首页
             </div>
-            
+
             <div className="mb-4">
                 <span className="font-bold mr-2">连接状态:</span>
                 <span className={`inline-flex items-center ${isMqttConnected ? 'text-green-600' : 'text-yellow-600'}`}>
@@ -115,23 +115,19 @@ export default function Device() {
             <div className="flex flex-row gap-4">
                 <button
                     onClick={handlerOpenLed}
-                    disabled={!isMqttConnected || !isDeviceOnline}
-                    className={`px-4 py-2 rounded ${
-                        isMqttConnected && isDeviceOnline
-                            ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    className={`px-4 py-2 rounded ${isMqttConnected && isDeviceOnline
+                            ? 'bg-blue-600 hover:bg-blue-700 text-white'
                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
+                        }`}
                 >
                     开灯
                 </button>
                 <button
                     onClick={handlerCloseLed}
-                    disabled={!isMqttConnected || !isDeviceOnline}
-                    className={`px-4 py-2 rounded ${
-                        isMqttConnected && isDeviceOnline
-                            ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    className={`px-4 py-2 rounded ${isMqttConnected && isDeviceOnline
+                            ? 'bg-blue-600 hover:bg-blue-700 text-white'
                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
+                        }`}
                 >
                     关灯
                 </button>

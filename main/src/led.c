@@ -10,12 +10,16 @@
 #define LED_GPIO GPIO_NUM_22
 #define TAG "led_c"
 
-static bool switch_state = false;
+static bool led_state = false;
+
+bool led_is_on() {
+    return led_state;
+}
 
 void handle_switch_button_click(void *arg1, void *arg2) {
-    switch_state = !switch_state;
-    gpio_set_level(LED_GPIO, switch_state);
-    ESP_LOGI(TAG, "BUTTON_SINGLE_CLICK");
+    led_state = !led_state;
+    gpio_set_level(LED_GPIO, led_state);
+    ESP_LOGI(TAG, "BUTTON_SINGLE_CLICK, LED state: %s", led_state ? "ON" : "OFF");
 }
 
 void led_init()
@@ -49,19 +53,21 @@ void led_init()
 
 char *led_current_state()
 {
-    return switch_state ? "on" : "off";
+    return led_state ? "on" : "off";
 }
 
 int led_turn_on()
 {
-    switch_state = true;
-    gpio_set_level(LED_GPIO, switch_state);
+    led_state = true;
+    gpio_set_level(LED_GPIO, led_state);
+    ESP_LOGI(TAG, "LED turned ON");
     return 0;
 }
 
 int led_turn_off()
 {
-    switch_state = false;
-    gpio_set_level(LED_GPIO, switch_state);
+    led_state = false;
+    gpio_set_level(LED_GPIO, led_state);
+    ESP_LOGI(TAG, "LED turned OFF");
     return 0;
 }
